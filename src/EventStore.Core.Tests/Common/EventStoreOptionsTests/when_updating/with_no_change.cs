@@ -26,7 +26,12 @@ namespace EventStore.Core.Tests.Common.EventStoreOptionsTests.when_updating
         [Test]
         public void should_save_no_changes()
         {
-            var args = new string[] { };
+            File.WriteAllLines(tempFileName, new string[]{
+                "RunProjections: All",
+                "HttpPort: 2113",
+                "Log: ~/ouroLogs"});
+
+            var args = new string[] { "--config=" + tempFileName };
             EventStoreOptions.Parse<TestArgs>(args, Opts.EnvPrefix);
 
             var optionsToSave = new OptionSource[] { 
