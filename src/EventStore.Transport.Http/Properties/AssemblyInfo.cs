@@ -11,8 +11,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 
 //NOTE: Do not change these, they will be modified during the build by TeamCity.
-[assembly: AssemblyVersion("0.0.0.0")]
-[assembly: AssemblyFileVersion("0.0.0.0")]
+[assembly: AssemblyVersion("3.0.1.0")]
+[assembly: AssemblyFileVersion("3.0.1.0")]
 
 [assembly: ComVisible(false)]
 [assembly: Guid("0ac18693-57b1-45c5-b7dd-eeab8ac25282")]

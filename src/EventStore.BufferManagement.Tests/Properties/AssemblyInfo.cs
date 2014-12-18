@@ -12,8 +12,8 @@ using NUnit.Framework;
 [assembly: AssemblyCulture("")]
 
 //NOTE: Do not change these, they will be modified during the build by TeamCity.
-[assembly: AssemblyVersion("0.0.0.0")]
-[assembly: AssemblyFileVersion("0.0.0.0")]
+[assembly: AssemblyVersion("3.0.1.0")]
+[assembly: AssemblyFileVersion("3.0.1.0")]
 
 [assembly: ComVisible(false)]
 [assembly: Guid("255a5bd0-33d8-4734-8e12-ef3442bb3615")]
