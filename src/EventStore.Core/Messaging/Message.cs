@@ -38,8 +38,9 @@ namespace EventStore.Core.Messaging
             Descendants = new Dictionary<Type, List<Type>>();
 
             int msgTypeCount = 0;
-            foreach (var msgType in 
-                (from assembly in AppDomain.CurrentDomain.GetAssemblies()
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            foreach (var msgType in
+                (from assembly in assemblies.Where(a => ! a.FullName.Contains("Castle"))
                  from type in assembly.GetTypes()
                  where rootMsgType.IsAssignableFrom(type)
                  select type))
