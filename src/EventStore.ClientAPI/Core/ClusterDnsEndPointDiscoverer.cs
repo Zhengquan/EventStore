@@ -22,14 +22,10 @@ namespace EventStore.ClientAPI.Core
 
         private readonly HttpAsyncClient _client;
         private ClusterMessages.MemberInfoDto[] _oldGossip;
-        private TimeSpan _gossipTimeout;
+        private readonly TimeSpan _gossipTimeout;
+        private readonly string httpSchema;
 
-        public ClusterDnsEndPointDiscoverer(ILogger log, 
-                                            string clusterDns,
-                                            int maxDiscoverAttempts, 
-                                            int managerExternalHttpPort,
-                                            GossipSeed[] gossipSeeds,
-                                            TimeSpan gossipTimeout)
+        public ClusterDnsEndPointDiscoverer(ILogger log, string clusterDns, int maxDiscoverAttempts, int managerExternalHttpPort, GossipSeed[] gossipSeeds, TimeSpan gossipTimeout, string httpSchema)
         {
             Ensure.NotNull(log, "log");
 
@@ -39,6 +35,7 @@ namespace EventStore.ClientAPI.Core
             _managerExternalHttpPort = managerExternalHttpPort;
             _gossipSeeds = gossipSeeds;
             _gossipTimeout = gossipTimeout;
+            this.httpSchema = httpSchema;
             _client = new HttpAsyncClient(log);
         }
 
@@ -177,7 +174,7 @@ namespace EventStore.ClientAPI.Core
             ClusterMessages.ClusterInfoDto result = null;
             var completed = new ManualResetEventSlim(false);
 
-            var url = endPoint.EndPoint.ToHttpUrl("/gossip?format=json");
+            var url = ToHttpUrl(endPoint);
             _client.Get(
                 url,
                 null,
@@ -209,6 +206,12 @@ namespace EventStore.ClientAPI.Core
 
             completed.Wait();
             return result;
+        }
+
+        private string ToHttpUrl(GossipSeed endPoint)
+        {
+            var ipEndPoint = endPoint.EndPoint;
+            return string.Format("{0}://{1}:{2}/{3}", httpSchema, ipEndPoint.Address, ipEndPoint.Port, "/gossip?format=json".TrimStart('/'));
         }
 
         private NodeEndPoints? TryDetermineBestNode(IEnumerable<ClusterMessages.MemberInfoDto> members)

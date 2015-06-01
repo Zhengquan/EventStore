@@ -13,6 +13,7 @@ namespace EventStore.ClientAPI
         private GossipSeed[] _gossipSeeds;
         private TimeSpan _gossipTimeout = TimeSpan.FromSeconds(1);
         private int _maxDiscoverAttempts = Consts.DefaultMaxClusterDiscoverAttempts;
+        private string _httpSchema = "http";
 
         /// <summary>
         /// Sets gossip seed endpoints for the client.
@@ -34,6 +35,18 @@ namespace EventStore.ClientAPI
 
             _gossipSeeds = gossipSeeds.Select(x => new GossipSeed(x)).ToArray();
 
+            return this;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public GossipSeedClusterSettingsBuilder SetHttpSchema(string httpSchema)
+        {
+            if (httpSchema == null) throw new ArgumentNullException("httpSchema");
+
+            _httpSchema = httpSchema;
             return this;
         }
 
@@ -90,7 +103,7 @@ namespace EventStore.ClientAPI
         /// Builds a <see cref="ClusterSettings"/> object from a <see cref="GossipSeedClusterSettingsBuilder"/>.
         /// </summary>
         public ClusterSettings Build() {
-            return new ClusterSettings(this._gossipSeeds, this._maxDiscoverAttempts, this._gossipTimeout);
+            return new ClusterSettings(this._gossipSeeds, this._maxDiscoverAttempts, this._gossipTimeout, this._httpSchema);
         }
     }
 }

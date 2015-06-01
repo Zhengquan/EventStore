@@ -40,18 +40,25 @@ namespace EventStore.ClientAPI
         public TimeSpan GossipTimeout;
 
         /// <summary>
+        /// 
+        /// </summary>
+        public readonly string HttpSchema;
+
+        /// <summary>
         /// Used if we're connecting with gossip seeds
         /// </summary>
         /// <param name="gossipSeeds">Endpoints for seeding gossip</param>
         /// <param name="maxDiscoverAttempts">Maximum number of attempts to discover the cluster</param>
         /// <param name="gossipTimeout">Timeout for cluster gossip</param>
-        internal ClusterSettings(GossipSeed[] gossipSeeds, int maxDiscoverAttempts, TimeSpan gossipTimeout)
+        /// <param name="httpSchema">the schema of http</param>
+        internal ClusterSettings(GossipSeed[] gossipSeeds, int maxDiscoverAttempts, TimeSpan gossipTimeout, string httpSchema)
         {
             ClusterDns = "";
             MaxDiscoverAttempts = maxDiscoverAttempts;
             ExternalGossipPort = 0;
             GossipTimeout = gossipTimeout;
             GossipSeeds = gossipSeeds;
+            HttpSchema = httpSchema;
         }
 
         /// <summary>

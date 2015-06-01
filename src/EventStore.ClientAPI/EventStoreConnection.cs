@@ -52,7 +52,8 @@ namespace EventStore.ClientAPI
                                                                       clusterSettings.MaxDiscoverAttempts,
                                                                       clusterSettings.ExternalGossipPort,
                                                                       clusterSettings.GossipSeeds,
-                                                                      clusterSettings.GossipTimeout);
+                                                                      clusterSettings.GossipTimeout,
+                                                                      clusterSettings.HttpSchema);
 
             return new EventStoreNodeConnection(connectionSettings, clusterSettings, endPointDiscoverer, connectionName);
         }
